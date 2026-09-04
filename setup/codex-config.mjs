@@ -12,9 +12,9 @@
 //
 // La config existante est sauvegardee en config.toml.bak.<timestamp>.
 
+import { existsSync, mkdirSync, renameSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { existsSync, readFileSync, writeFileSync, renameSync, mkdirSync } from "node:fs";
 
 const args = process.argv.slice(2);
 const getArg = (name, fallback) => {
