@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.log
+.env
+.octogent/
+~/.octogent/
+.DS_Store
