@@ -37,8 +37,12 @@ const MODELS = {
 // uniquement wire_api = "responses" (voir discussion openai/codex#7782).
 // DeepSeek et LM Studio supportent le format Responses API ; Ollama doit etre
 // suffisamment recent (support /responses) sinon utiliser LM Studio.
+// NB2: les ids `lmstudio` et `ollama` sont des providers integres reserves
+// dans codex >= 0.153 : nos providers customs portent des ids distincts
+// (deepseek-api, ollama-local, lmstudio-local).
 const PROVIDERS = {
   deepseek: {
+    id: "deepseek-api",
     name: "DeepSeek API",
     base_url: "https://api.deepseek.com",
     env_key: "DEEPSEEK_API_KEY",
@@ -46,6 +50,7 @@ const PROVIDERS = {
     requires_openai_auth: false,
   },
   ollama: {
+    id: "ollama-local",
     name: "Ollama (local)",
     base_url: `http://${host}:11434/v1`,
     env_key: null,
@@ -53,6 +58,7 @@ const PROVIDERS = {
     requires_openai_auth: false,
   },
   lmstudio: {
+    id: "lmstudio-local",
     name: "LM Studio (local)",
     base_url: `http://${host}:1234/v1`,
     env_key: null,
@@ -73,7 +79,7 @@ const model = MODELS[provider];
 const sections = [];
 for (const [id, p] of Object.entries(PROVIDERS)) {
   const lines = [
-    `[model_providers.${id}]`,
+    `[model_providers.${p.id}]`,
     `name = "${p.name}"`,
     `base_url = "${p.base_url}"`,
     `wire_api = "${p.wire_api}"`,
@@ -88,7 +94,7 @@ for (const [id, p] of Object.entries(PROVIDERS)) {
 const toml = [
   `# Genere par AgentOrchestrator (setup/codex-config.mjs) le ${new Date().toISOString()}`,
   `model = "${model}"`,
-  `model_provider = "${provider}"`,
+  `model_provider = "${selected.id}"`,
   "",
   ...sections,
   "",
