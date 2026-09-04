@@ -28,31 +28,35 @@ const host = getArg("--host", "localhost");
 const dryRun = hasFlag("--dry-run");
 
 const MODELS = {
-  deepseek: getArg("--model", "deepseek-chat"),
+  deepseek: getArg("--model", "deepseek-v4-flash"),
   ollama: getArg("--model", "qwen3-coder:14b"),
   lmstudio: getArg("--model", "qwen3-coder-14b-instruct"),
 };
 
+// NB: Codex CLI (>= v0.144) n'accepte plus wire_api = "chat" :
+// uniquement wire_api = "responses" (voir discussion openai/codex#7782).
+// DeepSeek et LM Studio supportent le format Responses API ; Ollama doit etre
+// suffisamment recent (support /responses) sinon utiliser LM Studio.
 const PROVIDERS = {
   deepseek: {
     name: "DeepSeek API",
     base_url: "https://api.deepseek.com",
     env_key: "DEEPSEEK_API_KEY",
-    wire_api: "chat",
+    wire_api: "responses",
     requires_openai_auth: false,
   },
   ollama: {
     name: "Ollama (local)",
     base_url: `http://${host}:11434/v1`,
     env_key: null,
-    wire_api: "chat",
+    wire_api: "responses",
     requires_openai_auth: false,
   },
   lmstudio: {
     name: "LM Studio (local)",
     base_url: `http://${host}:1234/v1`,
     env_key: null,
-    wire_api: "chat",
+    wire_api: "responses",
     requires_openai_auth: false,
   },
 };
