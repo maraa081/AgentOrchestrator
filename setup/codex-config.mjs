@@ -68,7 +68,13 @@ const model = MODELS[provider];
 
 const sections = [];
 for (const [id, p] of Object.entries(PROVIDERS)) {
-  const lines = [`[model_providers.${id}]`, `name = "${p.name}"`, `base_url = "${p.base_url}"`, `wire_api = "${p.wire_api}"`, `requires_openai_auth = ${p.requires_openai_auth}`];
+  const lines = [
+    `[model_providers.${id}]`,
+    `name = "${p.name}"`,
+    `base_url = "${p.base_url}"`,
+    `wire_api = "${p.wire_api}"`,
+    `requires_openai_auth = ${p.requires_openai_auth}`,
+  ];
   if (p.env_key) {
     lines.push(`env_key = "${p.env_key}"`);
   }
@@ -108,5 +114,7 @@ console.log(`[ok] modele: ${model}`);
 console.log(`[info] base_url: ${selected.base_url}`);
 
 if (provider === "deepseek" && !process.env.DEEPSEEK_API_KEY) {
-  console.log(`[info] pensez a definir DEEPSEEK_API_KEY (variable d'environnement Windows) avec votre cle https://platform.deepseek.com`);
+  console.log(
+    `[info] pensez a definir DEEPSEEK_API_KEY (variable d'environnement Windows) avec votre cle https://platform.deepseek.com`,
+  );
 }
