@@ -319,7 +319,7 @@ describe("createSessionRuntime", () => {
     });
 
     expect(runtime.startSession(tentacleId)).toBe(true);
-    expect(pty.write).toHaveBeenNthCalledWith(1, "claude\r");
+    expect(pty.write).toHaveBeenNthCalledWith(1, "codex\r");
 
     expect(runtime.closeSession(tentacleId)).toBe(true);
     vi.advanceTimersByTime(10_000);
@@ -732,7 +732,7 @@ describe("createSessionRuntime", () => {
 
     expect(runtime.startSession(tentacleId)).toBe(true);
     expect(sessions.has(tentacleId)).toBe(true);
-    expect(pty.write).toHaveBeenNthCalledWith(1, "claude\r");
+    expect(pty.write).toHaveBeenNthCalledWith(1, "codex\r");
 
     vi.advanceTimersByTime(4_000);
     expect(pty.write).toHaveBeenNthCalledWith(
@@ -790,7 +790,7 @@ describe("createSessionRuntime", () => {
       runtime.handleUpgrade(createUpgradeRequest(tentacleId), {} as Duplex, Buffer.alloc(0)),
     ).toBe(true);
 
-    expect(pty.write).toHaveBeenNthCalledWith(1, "claude\r");
+    expect(pty.write).toHaveBeenNthCalledWith(1, "codex\r");
 
     vi.advanceTimersByTime(4_000);
     expect(pty.write).toHaveBeenNthCalledWith(2, "\u001b[200~You are working on docs.\u001b[201~");
